@@ -1,0 +1,23 @@
+<idea-plugin version="2">
+    <name>SBJava2SQL</name>
+    <description>Extract strings fields value to clipboard as SQL</description>
+    <version>1.0</version>
+    <vendor url="http://serbis.net.ru" email="serbis@pisem.net">Serbis</vendor>
+    <idea-version since-build="7000"/>
+
+    <application-components>
+    </application-components>
+
+    <project-components>
+    </project-components>
+
+    <actions>
+        <action id="SBJava2SQLAction" icon="/com/netcracker/java2sql/SBJava2SQL.png" class="com.netcracker.java2sql.SBJava2SQLAction" text="Java2SQL">
+            <add-to-group anchor="after" group-id="EditorPopupMenu" relative-to-action="CutCopyPasteGroup"/>
+            <keyboard-shortcut first-keystroke="control shift S" keymap="$default"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+</idea-plugin>

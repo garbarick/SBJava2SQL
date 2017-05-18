@@ -1,0 +1,31 @@
+<project name="SBJava2SQL" default="build">
+
+    <property name="package" value="com/netcracker/java2sql"/>
+    <property name="src.dir" location="${basedir}/src"/>
+    <property name="build.dir" location="${basedir}/out"/>
+    <property name="bin.dir" value="${basedir}/bin"/>
+
+    <target name="build" depends="compile">
+        <jar jarfile="${bin.dir}/${ant.project.name}.jar">
+            <fileset dir="${build.dir}" includes="${package}/**/*.class"/>
+            <fileset dir="${build.dir}" includes="src.zip"/>
+            <fileset dir="${src.dir}" includes="${package}/**/*.png"/>
+            <metainf dir="${basedir}/META-INF" includes="plugin.xml"/>
+        </jar>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${bin.dir}"/>
+        <delete dir="${build.dir}" failonerror="no"/>
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}"
+               destdir="${build.dir}"
+               debug="on" deprecation="on" optimize="off">
+            <include name="${package}/**/*.java"/>
+        </javac>
+        <zip zipfile="${build.dir}/src.zip">
+            <zipfileset dir="${src.dir}"/>
+        </zip>
+    </target>
+
+</project>
