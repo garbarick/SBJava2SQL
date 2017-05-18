@@ -28,18 +28,31 @@ public class SBJava2SQLAction extends EditorAction
                 PsiElement element = null;
                 SelectionModel selectionModel = editor.getSelectionModel();
                 PsiFile psiFile = (PsiFile) dataContext.getData(LangDataKeys.PSI_FILE.getName());
+                Class psiPolyadicExpressionClass = null;
+                try
+                {
+                    psiPolyadicExpressionClass = Class.forName("com.intellij.psi.PsiPolyadicExpression");
+                }
+                catch (ClassNotFoundException e)
+                {
+                }
 
                 if (selectionModel.hasSelection())
                 {
                     int startOffset = psiFile.findElementAt(selectionModel.getSelectionStart()).getTextOffset();
                     int endOffset = psiFile.findElementAt(selectionModel.getSelectionEnd()).getTextRange().getEndOffset();
+
                     element = PsiTreeUtil.findElementOfClassAtRange(psiFile, startOffset, endOffset, PsiBinaryExpression.class);
+                    if (element == null && psiPolyadicExpressionClass != null)
+                    {
+                        element = PsiTreeUtil.findElementOfClassAtRange(psiFile, startOffset, endOffset, psiPolyadicExpressionClass);
+                    }
                     if (element == null)
                     {
                         element = PsiTreeUtil.findElementOfClassAtRange(psiFile, startOffset, endOffset, PsiLiteralExpression.class);
                     }
                 }
-                else
+                if (element == null)
                 {
                     element = PsiTreeUtil.getParentOfType(psiFile.findElementAt(editor.getCaretModel().getOffset()), PsiBinaryExpression.class, false, new Class[]{PsiMember.class});
                     if (element != null)
@@ -55,12 +68,15 @@ public class SBJava2SQLAction extends EditorAction
                         }
                         while (true);
                     }
-                    else
-                    {
-                        element = PsiTreeUtil.getParentOfType(psiFile.findElementAt(editor.getCaretModel().getOffset()), PsiLiteralExpression.class);
-                    }
                 }
-
+                if (element == null && psiPolyadicExpressionClass != null)
+                {
+                    element = PsiTreeUtil.getParentOfType(psiFile.findElementAt(editor.getCaretModel().getOffset()), psiPolyadicExpressionClass);
+                }
+                if (element == null)
+                {
+                    element = PsiTreeUtil.getParentOfType(psiFile.findElementAt(editor.getCaretModel().getOffset()), PsiLiteralExpression.class);
+                }
                 if (element != null)
                 {
                     CopyPasteManager.getInstance().setContents(new StringSelection(getValue(element)));
@@ -99,6 +115,9 @@ public class SBJava2SQLAction extends EditorAction
                             {
                                 buffer.append("/*").append(child.getText()).append("*/");
                             }
+                        }
+                        else if (child instanceof PsiJavaToken)
+                        {
                         }
                         else if (child instanceof PsiTypeElement)
                         {

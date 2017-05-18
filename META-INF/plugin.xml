@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <name>SBJava2SQL</name>
     <description>Extract strings fields value to clipboard as SQL</description>
-    <version>1.0</version>
+    <version>1.01</version>
     <vendor url="http://serbis.net.ru" email="serbis@pisem.net">Serbis</vendor>
     <idea-version since-build="7000"/>
 
