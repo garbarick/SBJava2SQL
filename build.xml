@@ -20,7 +20,8 @@
         <mkdir dir="${build.dir}"/>
         <javac srcdir="${src.dir}"
                destdir="${build.dir}"
-               debug="on" deprecation="on" optimize="off">
+               debug="on" deprecation="on" optimize="off"
+               target="1.6">
             <include name="${package}/**/*.java"/>
         </javac>
         <zip zipfile="${build.dir}/src.zip">

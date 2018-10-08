@@ -123,18 +123,22 @@ public class ActionHandler extends EditorActionHandler
         StringBuilder buffer = new StringBuilder();
         for (PsiElement element : elements)
         {
-            buffer.append(getValue(element));
+            buffer.append(getValue(element, 0));
         }
         return buffer.toString();
     }
 
-    private String getValue(PsiElement element)
+    private String getValue(PsiElement element, int iterator)
     {
         StringBuilder buffer = new StringBuilder();
+        if (iterator > 10)
+        {
+            return "?";
+        }
         if (element instanceof PsiReferenceExpression)
         {
             PsiElement resolve = ((PsiReferenceExpression) element).resolve();
-            buffer.append(getValue(resolve));
+            buffer.append(getValue(resolve, ++iterator));
         }
         else if (element instanceof PsiLiteralExpression)
         {
@@ -142,7 +146,7 @@ public class ActionHandler extends EditorActionHandler
         }
         else if (element instanceof PsiMethodCallExpression)
         {
-            buffer.append(getValue(element));
+            buffer.append(getValue(element, ++iterator));
         }
         else if (element instanceof PsiIdentifier)
         {
@@ -170,7 +174,7 @@ public class ActionHandler extends EditorActionHandler
         PsiElement[] children = element.getChildren();
         for (PsiElement child : children)
         {
-            buffer.append(getValue(child));
+            buffer.append(getValue(child, 0));
         }
         return buffer.toString();
     }
