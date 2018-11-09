@@ -131,7 +131,7 @@ public class ActionHandler extends EditorActionHandler
     private String getValue(PsiElement element, int iterator)
     {
         StringBuilder buffer = new StringBuilder();
-        if (iterator > 10)
+        if (iterator > 100)
         {
             return "?";
         }
@@ -143,10 +143,6 @@ public class ActionHandler extends EditorActionHandler
         else if (element instanceof PsiLiteralExpression)
         {
             buffer.append(((PsiLiteralExpression) element).getValue());
-        }
-        else if (element instanceof PsiMethodCallExpression)
-        {
-            buffer.append(getValue(element, ++iterator));
         }
         else if (element instanceof PsiIdentifier)
         {

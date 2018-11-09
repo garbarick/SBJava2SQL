@@ -21,7 +21,7 @@
         <javac srcdir="${src.dir}"
                destdir="${build.dir}"
                debug="on" deprecation="on" optimize="off"
-               target="1.6">
+               target="1.7">
             <include name="${package}/**/*.java"/>
         </javac>
         <zip zipfile="${build.dir}/src.zip">

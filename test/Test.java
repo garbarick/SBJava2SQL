@@ -1,7 +1,39 @@
+import java.math.BigInteger;
+
 public class Test
 {
+    BigInteger num = new BigInteger("1111111");
+    BigInteger num2 = BigInteger.valueOf(22222L);
+
     String test = "test string";
-    String test2 = "test2 " + test + " string2";
+    String test2 = "test2 " + test + " - string, " + num + " - num, " + num2 + " - num2";
+    String test3 = num2 + " - num2";
+
+    static class Item
+    {
+        public String name()
+        {
+            return "test name";
+        }
+    }
+
+    static class OptLang
+    {
+        static Item EN = new Item();
+    }
+
+    static class CardTovLocalization
+    {
+        static Item NAME = new Item();
+    }
+
+    static class SqlTools
+    {
+        public static String forSQL(String name)
+        {
+            return name + " (forSQL)";
+        }
+    }
 
     String sql = "SELECT\n" +
         "     f.f_cod,\n" +
